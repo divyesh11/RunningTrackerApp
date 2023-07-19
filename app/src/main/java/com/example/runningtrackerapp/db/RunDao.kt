@@ -31,7 +31,7 @@ interface RunDao {
     fun getAllRunsSortedByDistance(): LiveData<List<Run>>
 
     @Query("SELECT SUM(durationInMillis) from running_table")
-    fun getTotalTimeInMillis(): LiveData<Long>
+    fun getTotalDurationInMillis(): LiveData<Long>
 
     @Query("SELECT SUM(caloriesBurned) from running_table")
     fun getTotalCaloriesBurned(): LiveData<Int>
