@@ -1,13 +1,16 @@
 package com.example.runningtrackerapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.runningtrackerapp.R
 import com.example.runningtrackerapp.databinding.ActivityMainBinding
+import com.example.runningtrackerapp.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +38,23 @@ class MainActivity : AppCompatActivity() {
 
                 else -> mainBinding.bottomNavigationView.visibility = View.GONE
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigateToTrackingFragmentIfNeeded(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigateToTrackingFragmentIfNeeded(intent)
+    }
+
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+        if (intent?.action.equals(ACTION_SHOW_TRACKING_FRAGMENT)) {
+            mainBinding.navHostFragment.findNavController()
+                .navigate(R.id.action_global_tracking_fragment)
         }
     }
 }
